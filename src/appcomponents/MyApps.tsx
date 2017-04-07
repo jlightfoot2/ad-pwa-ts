@@ -83,7 +83,7 @@ export default class MyApps extends React.Component<Props, State> {
   }
   render () {
     var {appList, device} = this.props;
-    var appItemWidth = device.size === 'small' ? '50%' : '25%';
+    var appItemWidth = device.width < 600 ? '50%' : '25%';
     var appContainer = {...styles.appContainer, width: appItemWidth};
     let pageContent: any = 
         <Paper style={styles.messageBox as any} zDepth={2}>

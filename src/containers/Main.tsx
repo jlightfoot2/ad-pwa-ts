@@ -1,5 +1,5 @@
 import * as React from 'react';
-import AppBarPage from '../components/AppBarPage'
+import AppBarPage from '../appcomponents/AppBarPage'
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';

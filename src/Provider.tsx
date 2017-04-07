@@ -1,5 +1,6 @@
 import Theme from './components/Theme';
 import Home from './containers/Home';
+import SplashPage from './components/SplashPage';
 import MyApps from './containers/Apps';
 import Catalog from './containers/Catalog';
 import Dashboard from './components/Dashboard';
@@ -14,20 +15,52 @@ import {Router, hashHistory} from 'react-router';
 import {syncHistoryWithStore, routerMiddleware} from 'react-router-redux';
 import {navigationCreateMiddleware} from './lib/local-t2-navigation';
 import {registerPromise,appMiddleware} from 'local-t2-sw-redux';
-import { createStore, applyMiddleware} from 'redux'
+import { createStore, applyMiddleware, compose} from 'redux'
 import reducer from './reducers';
 import {asynRouteMaker,syncRoute} from './lib/helpers';
 import {windowResize} from './actions/device';
 import navigationConfig from './navigationConfig';
+import * as localForage from 'localforage'
+import createMigration from 'redux-persist-migrate';
+import {persistStore, autoRehydrate} from 'redux-persist';
+import {appItems} from './reducers';
+//persist store config from old version: {keyPrefix: 'reduxPresistT2Hub'}
+
+let reducerKey = 'migrations'; // name of the migration reducer
+
+const manifest = {
+  '10001': (state) => ({...state, navigation: undefined}),
+  '10003': (state) => ({...state, apps: undefined}),
+
+  '10005': (state) => {
+    return {...state, apps: undefined, t2AppIds: undefined};
+  },
+  '10006': (state) => {
+
+    let newMyAppsIds = state.myAppIds ? state.myAppIds.filter((id) => {
+      if (typeof appItems[id + ''] !== 'undefined') {
+        return true;
+      }
+      return false;
+    }) : undefined;
+    
+    return {...state, myAppIds: newMyAppsIds};
+  }
+};
+
+const migration = createMigration(manifest, reducerKey);
+const persistEnhancer = compose(migration, autoRehydrate());
 
 
-let store = createStore(reducer,
+let store = createStore(
+    reducer,
     applyMiddleware(
         routerMiddleware(hashHistory),
         thunkMiddleware,
         navigationCreateMiddleware(navigationConfig),
         appMiddleware({url: '',interval: 30000})
-      )
+      ),
+    persistEnhancer as any
   );
 
 var _timeOutResizeId = null;
@@ -107,11 +140,35 @@ interface MyProps {
 }
 
 interface MyState {
-  [propName: string]: any;
+  rehydrated: boolean;
 }
 
 export default class AppProvider extends React.Component<MyProps,  MyState>{
+  constructor(store){
+    super(store);
+    this.state = {
+      rehydrated: false
+    }
+  }
+  componentWillMount () { // only called on first load or hard browser refresh
+    /**
+     * keyPrefix: This prefix is added to all root properties of the app state
+     * This is important if you are hosting multiple apps on the same origin.
+     * Otherwise databases from other apps will overlap and cause strange behavior
+     */
+    persistStore(store, {keyPrefix: 'reduxPresistT2Hub'}, () => {
+      /**
+       * We wait until the state is hydrated before rendering the ui
+       */
+
+        this.setState({ rehydrated: true });
+    });
+  }
+
   render(){
+   if(!this.state.rehydrated){
+     return <Theme><SplashPage /></Theme>
+   }
    return (
             <Provider store={store}>
               <Router history={history} routes={siteRoutes} />

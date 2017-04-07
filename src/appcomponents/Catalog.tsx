@@ -1,9 +1,9 @@
 import * as React from 'react';
-
+import { Link } from 'react-router';
 import {GridList, GridTile} from 'material-ui/GridList';
 import RaisedButton from 'material-ui/RaisedButton';
 import Subheader from 'material-ui/Subheader';
-
+import {topRightButtonStyle, clearBothStyle} from '../components/commonStyles';
 
 import {toggleT2AppFromMyList, showFlashMessage} from '../actions';
 import AppButtonIcon from './AppButtonIcon';
@@ -43,7 +43,11 @@ export default class Catalog extends React.Component<Props,State> {
 
     return (
             <div style={styles.content as any}>
-                 <RaisedButton >Done</RaisedButton>
+              <div style={topRightButtonStyle}>
+                 <RaisedButton   containerElement={<Link color={'white'} to={'/apps'} />}>Done</RaisedButton>
+              </div>
+              <div style={clearBothStyle}>
+
               <GridList
                 cellHeight={200}
                 style={styles.gridList}
@@ -65,6 +69,7 @@ export default class Catalog extends React.Component<Props,State> {
                 ))}
 
               </GridList>
+              </div>
             </div>
           );
   }

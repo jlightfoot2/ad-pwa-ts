@@ -1,29 +1,29 @@
 {
-  "name": "Alcohol & Drugs Module",
-  "short_name": "Alcohol & Drugs",
+  "name": "Application Hub",
+  "short_name": "App Hub",
   "icons": [{
-    "src": "/ea6e8a7f928eddcb8be746bb37a49e22.png",
+    "src": "/6759250fe8ed78589cdd0480f20ceb09.png",
       "sizes": "128x128",
       "type": "image/png"
     }, {
-      "src": "/d025ee06fcf1b041f9641aa2e956e984.png",
+      "src": "/016a94d4f1ea1a370133ac50fe897941.png",
       "sizes": "144x144",
       "type": "image/png"
     }, {
-      "src": "/f7074c67994bdd4750732f2d94596b2e.png",
+      "src": "/c6207e14e31d1a679fffd3c02d782f9f.png",
       "sizes": "152x152",
       "type": "image/png"
     }, {
-      "src": "/7a576383796a193dfed56f64d8bced45.png",
+      "src": "/6b46669dbd5860e821b5075ad406753c.png",
       "sizes": "192x192",
       "type": "image/png"
     }, {
-      "src": "/7c42f8c53f484a2fca27469222d7f8ca.png",
+      "src": "/eee7e0c2709bdb267ca58662de664d61.png",
       "sizes": "256x256",
       "type": "image/png"
     }],
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#FF9800",
-  "theme_color": "#3F51B5"
+  "background_color": "#3E4EB8",
+  "theme_color": "#2F3BA2"
 }

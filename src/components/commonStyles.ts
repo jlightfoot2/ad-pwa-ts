@@ -10,7 +10,13 @@ export const foatingButtonStyle = {
 
 export const topRightButtonStyle = {
      position: 'relative',
-     float: 'right'
+     float: 'right',
+     clear: 'both',
+     padding: '10px 10px 10px 10px',
+};
+
+export const clearBothStyle = {
+     clear: 'both'
 };
 
 export const flexParentRowStyle = {

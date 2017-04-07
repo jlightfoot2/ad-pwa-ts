@@ -35,7 +35,7 @@ const defaultView = {
 /*
 * The data below could come from a rest server
 */
-const defaultApps = [
+const previousdefaultApps = [
   {
     id: 1,
     img: require('../res/images/afdep_injury_topics_lg.png'),
@@ -102,7 +102,7 @@ const defaultApps = [
   }
 ];
 
-const newDefaultApps = [
+const defaultApps = [
   {
     id: 2,
     img: require('../res/images/intro-pts.png'),
@@ -150,7 +150,7 @@ const newDefaultApps = [
  * @type {Object}
  */
 const appTree = {
-  apps: newDefaultApps
+  apps: defaultApps
 };
 
 /*
@@ -166,7 +166,6 @@ export const appItems = t2apps.entities.appitems;
 const initT2AppIds = t2apps.result;
 const initMyAppIds = [];
 
-console.log(appItems,initT2AppIds);
 /**
  * Below are convenience functions to prevent mutations
  */

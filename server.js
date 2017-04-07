@@ -20,7 +20,7 @@ app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(3014, function(err) {
+app.listen(3001, function(err) {
   if (err) {
     return console.error(err);
   }

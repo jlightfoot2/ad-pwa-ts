@@ -1,8 +1,7 @@
 html {
+  box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
 }
-
-body {
-  font-size: 13px;
-  line-height: 20px;
+*, *:before, *:after {
+  box-sizing: inherit;
 }

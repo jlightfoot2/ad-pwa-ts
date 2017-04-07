@@ -31,7 +31,16 @@ const styles = {
     width: '100%',
     height: '100%',
     zIndex: -2
-  }
+  },
+  wrapper: {
+    overflowY: 'auto'
+  },
+  content: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexFlow: 'row',
+    height: '100%'
+  },
 };
 
 
@@ -100,7 +109,7 @@ export default class AppBarPage extends React.Component<MyProps, MyState>{
                
                  />
                 <div style={{'padding': '5px'} as any}>
-                  <div>
+                  <div style={styles.content as any}>
                     {React.cloneElement((this.props as any).children, { appBarTitle: this.handleTitle, categories, pathOnTouchTap, appConfig: appConfig })}
                   </div>
                 </div>
