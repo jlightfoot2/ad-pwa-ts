@@ -1,7 +1,7 @@
 import {windowResize,WINDOW_RESIZE} from '../../actions/device';
 import {device} from '../device';
 
-describe('reducer', () => {
+describe('Device Reducer', () => {
   it('should update the state with the new device state', () => {
     const expectedState = {
       width: 222,

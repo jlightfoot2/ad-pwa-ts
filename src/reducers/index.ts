@@ -1,6 +1,5 @@
 import {combineReducers} from 'redux';
 import {routerReducer} from 'react-router-redux';
-import {assessmentResults,assessmentResultIds} from './assessment';
 import {device} from './device';
 import {appReducer} from 'local-t2-sw-redux';
 import {navigationReducer} from '../lib/local-t2-navigation';
@@ -164,7 +163,7 @@ var t2apps = normalize(appTree.apps, appItemListSchema);
 export const appItems = t2apps.entities.appitems;
 
 const initT2AppIds = t2apps.result;
-const initMyAppIds = [];
+
 
 /**
  * Below are convenience functions to prevent mutations
@@ -292,7 +291,8 @@ export const t2AppIds = (state = initT2AppIds, action) => {
  *
  * @return Array the new state or the current state
  */
-export const myAppIds = (state = initMyAppIds, action) => {
+export const myAppIds = (state = [], action) => {
+
   switch (action.type) {
     case ADD_T2APP_TO_MYAPPS_LIST:
       return arrayPushUnique(state, action.id);
