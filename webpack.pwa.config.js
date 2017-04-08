@@ -86,7 +86,7 @@ module.exports = {
       
         new SWPrecacheWebpackPlugin(
           {
-            cacheId: 'ad-drug-pwa',
+            cacheId: 'ad-pwa-t2hub-cache2',
             filename: 'sw.js',
             maximumFileSizeToCacheInBytes: 104857600, // 100Mb
             staticFileGlobs: [

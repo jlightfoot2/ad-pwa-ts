@@ -22,8 +22,9 @@ import {windowResize} from './actions/device';
 import navigationConfig from './navigationConfig';
 import * as localForage from 'localforage'
 import createMigration from 'redux-persist-migrate';
-import {persistStore, autoRehydrate} from 'redux-persist';
+import {persistStore, autoRehydrate, purgeStoredState, getStoredState} from 'redux-persist';
 import {appItems} from './reducers';
+import {addT2AppsToMyApps, showFlashMessage} from './actions'
 //persist store config from old version: {keyPrefix: 'reduxPresistT2Hub'}
 
 let reducerKey = 'migrations'; // name of the migration reducer
@@ -45,9 +46,34 @@ const manifest = {
     }) : undefined;
     
     return {...state, myAppIds: newMyAppsIds};
-  }
+  },
+  '10007': state => state
 };
 
+const oldStorageConfig = {
+  keyPrefix: 'reduxPresistT2Hub'
+};
+
+const storageConfig = {
+  keyPrefix: 'reduxPresistT2HubLF',
+  storage: localForage
+};
+
+
+const migrateOldStateIfNeccessary = (store) => {
+  const oldPersistor = persistStore(store, oldStorageConfig,(err,oldStoredState) => {
+    if(!err && oldStoredState && typeof oldStoredState.myAppIds !== 'undefined' && oldStoredState.myAppIds.length){
+       oldStoredState.myAppIds
+         .filter(appId => typeof appItems[appId] !== 'undefined')
+         .map((appId) => {
+           store.dispatch(addT2AppsToMyApps(appId));
+         }) 
+       oldPersistor.purge();
+    }
+  });
+} 
+
+ 
 const migration = createMigration(manifest, reducerKey);
 const persistEnhancer = compose(migration, autoRehydrate());
 
@@ -151,15 +177,19 @@ export default class AppProvider extends React.Component<MyProps,  MyState>{
     }
   }
   componentWillMount () { // only called on first load or hard browser refresh
-    /**
-     * keyPrefix: This prefix is added to all root properties of the app state
-     * This is important if you are hosting multiple apps on the same origin.
-     * Otherwise databases from other apps will overlap and cause strange behavior
-     */
-    persistStore(store, {keyPrefix: 'reduxPresistT2Hub'}, () => {
+
+    persistStore(store, storageConfig, (err,state) => {
+      
       /**
        * We wait until the state is hydrated before rendering the ui
        */
+     
+        if(typeof state.migrations === 'undefined'
+          || typeof state.migrations.version === 'undefined' 
+          || state.migrations.version  < 1007){
+          
+          migrateOldStateIfNeccessary(store);
+        }
 
         this.setState({ rehydrated: true });
     });
