@@ -84,7 +84,7 @@ let store = createStore(
         routerMiddleware(hashHistory),
         thunkMiddleware,
         navigationCreateMiddleware(navigationConfig),
-        appMiddleware({url: '',interval: 30000})
+        appMiddleware({url: 'https://apphub.tee2.org/version.json',interval: 30000})
       ),
     persistEnhancer as any
   );
