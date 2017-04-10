@@ -21,6 +21,7 @@ export interface Props {
  cols: number;
  toggleToMyApps(any):any;
  flashMessage(any):any;
+ backButtonClick(any):any;
  appList: any[];
 }
 export interface State {
@@ -32,7 +33,7 @@ export default class Catalog extends React.Component<Props,State> {
     this.props.appBarTitle && this.props.appBarTitle('T2 Catalog');
   }
   render () {
-    var {appList, cols, toggleToMyApps, flashMessage} = this.props;
+    var {appList, cols, toggleToMyApps, flashMessage,backButtonClick} = this.props;
     const onClick = (app) => {
       return () => {
         const message = app.title + (app.installed ? ' has been removed from ': ' has been added to ') + ' "My Apps"';
@@ -44,7 +45,7 @@ export default class Catalog extends React.Component<Props,State> {
     return (
             <div style={styles.content as any}>
               <div style={topRightButtonStyle}>
-                 <RaisedButton   containerElement={<Link color={'white'} to={'/apps'} />}>Done</RaisedButton>
+                 <RaisedButton onTouchTap={backButtonClick}>Done</RaisedButton>
               </div>
               <div style={clearBothStyle}>
 

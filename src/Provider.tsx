@@ -183,11 +183,11 @@ export default class AppProvider extends React.Component<MyProps,  MyState>{
       /**
        * We wait until the state is hydrated before rendering the ui
        */
-     
+        console.log(state.migrations);
         if(typeof state.migrations === 'undefined'
           || typeof state.migrations.version === 'undefined' 
           || state.migrations.version  < 1007){
-          
+          console.log('migration is run');
           migrateOldStateIfNeccessary(store);
         }
 

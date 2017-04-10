@@ -2,6 +2,7 @@ import {toggleT2AppFromMyList} from '../actions';
 import {viewActions} from '../lib/local-t2-view';
 import Catalog from '../appcomponents/Catalog';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 function getCols (device) {
   const width = device.width;
   if(width < 500){
@@ -25,7 +26,10 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     toggleToMyApps: (id) => dispatch(toggleT2AppFromMyList(id)),
-    flashMessage: (text) => dispatch(viewActions.sendMessage(text))
+    flashMessage: (text) => dispatch(viewActions.sendMessage(text)),
+    backButtonClick: (event) => {
+       dispatch(push('/apps'));
+    }
   };
 };
 
