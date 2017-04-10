@@ -27,7 +27,11 @@ const mapDispatchToProps = (dispatch) => {
   return {
     toggleToMyApps: (id) => dispatch(toggleT2AppFromMyList(id)),
     flashMessage: (text) => dispatch(viewActions.sendMessage(text)),
-    backButtonClick: (event) => {
+    backButtonClick: (event, preventDefault = true) => {
+        if(preventDefault ){
+          event.preventDefault();
+          event.stopPropagation();
+        }
        dispatch(push('/apps'));
     }
   };
